@@ -25,3 +25,5 @@ export ARM_TENANT_ID="<azure_subscription_tenant_id>"
 export ARM_CLIENT_ID="<service_principal_appid>"
 export ARM_CLIENT_SECRET="<service_principal_password>"
 ```
+
+### Select needed region to locate [Azure Regions](https://github.com/claranet/terraform-azurerm-regions/blob/master/REGIONS.md)
