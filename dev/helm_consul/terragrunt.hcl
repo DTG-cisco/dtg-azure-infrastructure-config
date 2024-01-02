@@ -18,39 +18,27 @@ dependency "cluster_ip" {
   }
 }
 
-/*
-# for now they are hardcoded
+
 locals {
   environment_vars = read_terragrunt_config(find_in_parent_folders("env.hcl"))
-  env              = local.environment_vars.locals.environment
-  app              = local.environment_vars.locals.app_api_gw
+  env              = local.environment_vars.locals.env_tag
+  app              = local.environment_vars.locals.app_consul
   namespace        = local.environment_vars.locals.namespace
-  chart_n          = local.environment_vars.locals.chart_api_gw
-  repository       = local.environment_vars.locals.repo_api_gw
-  zone             = local.environment_vars.locals.zone
+  chart_n          = local.environment_vars.locals.chart_name_consul
+  repository       = local.environment_vars.locals.repo_consul
 }
-*/
 
 
 inputs = {
   values                 = ["${file("values/consul-values.yaml")}"]
-  env                    = dependency.cluster_ip.outputs.aks_name
+  env                    = local.env
   zone                   = "local.zone"
-  namespace              = "consul"
-  chart_name             = "consul"
-  repository             = "https://helm.releases.hashicorp.com"
+  namespace              = local.namespace
+  chart_name             = local.chart_n
+  repository             = local.repository
   kuber_host             = dependency.cluster_ip.outputs.host
   cluster_ca_certificate = dependency.cluster_ip.outputs.cluster_ca_certificate
-  password               = dependency.cluster_ip.outputs.admin_password
+  password               = dependency.cluster_ip.outputs.password
 
-  app = {
-    name             = "consul"
-    deploy           = 1
-    chart            = "consul"
-    wait             = false
-    recreate_pods    = false
-    version          = "1.3.0"
-    create_namespace = true
-  }
-
+  app = local.app
 }

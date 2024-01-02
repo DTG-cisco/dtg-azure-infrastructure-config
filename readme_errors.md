@@ -31,7 +31,8 @@ How to fix: need to create own module
 -----------------------
 ### Azure Kubernetes Module
 [aks/azurerm](https://registry.terraform.io/modules/Azure/aks/azurerm/latest)
-output "password"  - No any data, (need to use admin_password)
+output "password"  - No any data, (need to use admin_password)<br>
+Other problem: in different Kubernetes cluster configs, available different variables with passwords (admin_password, password)
 ```terraform
 output "password" {
   description = "The `password` in the `azurerm_kubernetes_cluster`'s `kube_config` block. A password or token used to authenticate to the Kubernetes cluster."
@@ -45,4 +46,12 @@ output "host" {
   sensitive   = true
   example     = https://dev-add2g43.eastazia.azmk8s.io:443
 }
+```
+how it was tested (in any default resource create tags: 
+```terraform
+  tags = {
+    "host" : dependency.cluster_ip.outputs.host,
+    "passw" : dependency.cluster_ip.outputs.password
+    "admin_passw" : dependency.cluster_ip.outputs.admin_password
+  }
 ```
