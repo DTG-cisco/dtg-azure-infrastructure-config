@@ -1,4 +1,3 @@
-/*
 terraform {
   source = "git::https://github.com/Vitalikys/helm.git//"
 }
@@ -20,8 +19,9 @@ dependency "cluster_ip" {
   }
 }
 
-*/
-/*locals {
+/*
+
+locals {
   environment_vars = read_terragrunt_config(find_in_parent_folders("env.hcl"))
   env              = local.environment_vars.locals.environment
   app              = local.environment_vars.locals.app_api_gw
@@ -29,17 +29,27 @@ dependency "cluster_ip" {
   chart_n          = local.environment_vars.locals.chart_api_gw
   repository       = local.environment_vars.locals.repo_api_gw
   zone             = local.environment_vars.locals.zone
-}*//*
+}
+*/
 
 
 inputs = {
-  values = ["${file("values/consul-values.yaml")}"]
-  app                    = "consul"
+  values                 = ["${file("values/consul-values.yaml")}"]
+  app                    =  {
+    name             = "consul"
+    deploy           = 1
+    chart            = "consul"
+    wait             = false
+    recreate_pods    = false
+    version          = "1.3.0"
+    create_namespace = true
+  }
   env                    = dependency.cluster_ip.outputs.aks_name
   zone                   = "local.zone"
   namespace              = "consul"
   chart_name             = "consul"
   repository             = "https://helm.releases.hashicorp.com"
   kuber_host             = dependency.cluster_ip.outputs.host
-  cluster_ca_certificate = dependency.cluster_ip.outputs.aks_name
-}*/
+  cluster_ca_certificate = dependency.cluster_ip.outputs.cluster_ca_certificate
+  password = dependency.cluster_ip.outputs.password
+}
