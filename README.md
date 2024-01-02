@@ -27,3 +27,5 @@ export ARM_CLIENT_SECRET="<service_principal_password>"
 ```
 
 ### Select needed region to locate [Azure Regions](https://github.com/claranet/terraform-azurerm-regions/blob/master/REGIONS.md)
+
+Azure subscription Id is usually not treated as PII or secret because with just the Id, nobody can log into it or know what is subscription name or who are the users / owners etc
