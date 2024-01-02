@@ -1,5 +1,5 @@
 terraform {
-  source = "git::https://github.com/DTG-cisco/dtg-azure-infrastructure-config.git//terraform/modules/helm_chart?ref=dev-test"
+  source = "git::https://github.com/DTG-cisco/dtg-azure-infrastructure-config.git//terraform/modules/helm_chart"
 }
 
 dependencies {
