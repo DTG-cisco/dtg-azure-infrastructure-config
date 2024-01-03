@@ -1,0 +1,28 @@
+# https://registry.terraform.io/modules/cloudopsworks/aks-helm/azure/latest?tab=inputs
+include "root" {
+  path = find_in_parent_folders()
+}
+
+terraform {
+     source = "tfr:///cloudopsworks/aks-helm/azure?version=1.0.1"
+}
+
+dependencies {
+  paths = ["../kubernetes"]
+}
+
+
+inputs = {
+  chart_name = "consul"
+  chart_version = "1.3.0"
+  cluster_name = "dev-cluster"
+  helm_repo = "helm.releases.hashicorp.com"
+  release_name = "consul"
+  resource_group = "group"
+#  inputs = [
+#    "${file("values/consul-values.yaml")}"
+#  ]
+  var_files = ["values/consul-values.yaml"]
+#  vars = []
+  namespace = "consul"
+}

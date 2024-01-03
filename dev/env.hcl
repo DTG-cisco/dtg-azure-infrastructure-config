@@ -1,18 +1,22 @@
 locals {
-    env_vars = read_terragrunt_config(find_in_parent_folders("env.hcl"))
+  env_tag             = "dev"
+  resource_group_name = "group"
+  region              = "eastasia"
+  subnet_prefixes     = ["10.0.11.0/24"]
+  subnet_names        = ["dev-subnet-1"]
 
-    subscription_id                        = local.env_vars.locals.subscription_id
-    client_id                              = local.env_vars.locals.client_id
-    client_secret                          = local.env_vars.locals.client_secret
-    tenant_id                              = local.env_vars.locals.tenant_id
-    resource_group_name                    = local.env_vars.locals.resource_group_name
-    storage_account_name                   = local.env_vars.locals.storage_account_name
+  # Helm Consul Variables
+  namespace         = "consul"
+  repo_consul       = "https://helm.releases.hashicorp.com"
+  chart_name_consul = "consul"
+  app_consul = {
+    name             = "consul"
+    deploy           = 1
+    chart            = "consul"
+    wait             = false
+    recreate_pods    = false
+    version          = "1.3.0"
+    create_namespace = true
+  }
 
-
-
-     env_tag = "dev"
-    // #vnet vars
-    // vnet_location = "westeurope"
-    // vnet_name = "DTG-vnet"
-    // subnet_prefixes = ["10.0.11.0/24"]
 }
