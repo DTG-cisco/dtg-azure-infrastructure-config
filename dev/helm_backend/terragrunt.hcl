@@ -75,16 +75,4 @@ inputs = {
       value = "localhost"
     }
   ]
-
-  set_sensitive = [
-    # Kubernetes Secret Will be created via charts/backend/template/secret.yaml
-    {
-      path  = "nexus.token"
-      value = "eyJhdXRocyI6eyJodHRwczovL25leHVzLmdyZWVuLXRlYW0tc2NoZWR1bGUucHAudWEiOnsidXNlcm5hbWUiOiJhZG1pbiIsInBhc3N3b3JkIjoic3Vzc1lhbW9nMTFzIiwiYXV0aCI6IllXUnRhVzQ2YzNWemMxbGhiVzluTVRGeiJ9fX0="
-    },
-    {
-      path  = "postgres.db_password"
-      value = "pass"
-    }
-  ]
 }
